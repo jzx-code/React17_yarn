@@ -3,7 +3,7 @@ import List from './list'
 import SearchPanel from './search-panel'
 import React, { useEffect, useState } from 'react'
 import * as qs from 'qs'
-import { cleanObject } from 'utilis'
+import { cleanObject, useDebounce, useMount } from 'utilis'
 
 const apiUrl=process.env.REACT_APP_API_URL
 
@@ -13,21 +13,22 @@ export default function Index() {
         name:"",
         personId:""
     })
+    const debouncedParam = useDebounce(param,2000)
     const [list,setList]=useState([])
     useEffect(()=>{
-        fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(async response=>{
+        fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`).then(async response=>{
             if(response.ok){
                 setList(await response.json())
             }
         })
-    },[param])
-    useEffect(()=>{
+    },[debouncedParam])
+    useMount(()=>{
         fetch(`${apiUrl}/users`).then(async response=>{
             if(response.ok){
                 setUsers(await response.json())
             }
         })
-    },[users])
+    })
   return (
     <div>
         <SearchPanel param={param} 

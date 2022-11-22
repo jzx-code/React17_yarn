@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function List({users, list }) {
-    console.log(list)
     return (
         <table>
             <thead>
