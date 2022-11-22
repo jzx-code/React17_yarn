@@ -13,7 +13,7 @@ export default function Index() {
         name:"",
         personId:""
     })
-    const debouncedParam = useDebounce(param,2000)
+    const debouncedParam = useDebounce(param,200)
     const [list,setList]=useState([])
     useEffect(()=>{
         fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`).then(async response=>{

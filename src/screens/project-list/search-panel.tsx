@@ -1,6 +1,23 @@
 import React from 'react'
 
-export default function SearchPanel({ users, param, setParam }) {
+export interface User{
+  id:string,
+  name:string,
+  email:string,
+  title:string,
+  organization:string
+}
+
+interface SearchPanelProps{
+  users:User[],
+  param:{
+    name:string,
+    personId:string
+  },
+  setParam:(param:SearchPanelProps['param'])=>void
+}
+
+export default function SearchPanel({ users, param, setParam }:SearchPanelProps) {
   return (
     <div>
       <input type="text" value={param.name} onChange={evt => setParam({

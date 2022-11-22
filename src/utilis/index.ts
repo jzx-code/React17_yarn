@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 //出现0的情况时转为true不是就为value
-export const isFalsy = value=>value===0?false:!value
-export const cleanObject = (object) =>{
+export const isFalsy = (value:any)=>(value===0?false:!value)
+export const cleanObject = (object:object) =>{
     const result = {...object}
     Object.keys(result).forEach(key=>{
         //获取value的值
@@ -14,12 +14,12 @@ export const cleanObject = (object) =>{
     })
     return result
 }
-export const useMount=(callback)=>{
+export const useMount=(callback:()=>void)=>{
     useEffect(()=>{
         callback()
     },[])
 }
-export const  useDebounce = (value,delay)=>{
+export const  useDebounce = (value:any,delay?:number)=>{
     const [debounceValue,setDebouncedValue]=useState(value)
     useEffect(()=>{
         const tiemout = setTimeout(()=>setDebouncedValue(value),delay)
