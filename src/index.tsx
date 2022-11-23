@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -19,23 +18,3 @@ loadDevTools(() =>
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-=======
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import {loadDevTools } from "jira-dev-tool"
-loadDevTools(()=>{
-  const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
-  );
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
-})
-
-
-
->>>>>>> f771c78692d95b665ab7d35d975f3260896067c8
