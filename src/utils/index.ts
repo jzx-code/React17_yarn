@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
 // 在一个函数里，改变传入的对象本身是不好的
+//清除对象中的值为空的内容
 export const cleanObject = (object: object) => {
   // Object.assign({}, object)
   const result = { ...object };
