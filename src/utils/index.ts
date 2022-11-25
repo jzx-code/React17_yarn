@@ -17,6 +17,7 @@ export const cleanObject = (object: object) => {
   });
   return result;
 };
+//页面加载执行一个回调
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
@@ -51,6 +52,7 @@ export const useMount = (callback: () => void) => {
 //             // 所以，log()#3 结束后，就只剩timeout#3在独自等待了
 
 // 后面用泛型来规范类型
+//节流防抖
 export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -63,7 +65,7 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 
   return debouncedValue;
 };
-
+//Hooks数组处理
 export const useArray = <T>(initialArray: T[]) => {
   const [value, setValue] = useState(initialArray);
   return {

@@ -4,11 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { loadDevTools } from "jira-dev-tool";
+import 'antd/dist/antd.less'
 import { AppProviders } from "context";
-
+//请求管理的库
 loadDevTools(() =>
   ReactDOM.render(
     <React.StrictMode>
+      {/**content存储的公共数据*/}
       <AppProviders>
         <App />
       </AppProviders>

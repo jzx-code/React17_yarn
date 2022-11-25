@@ -8,6 +8,7 @@ interface AuthForm{
     username:string,
     password:string
 }
+//登录保持
 //获取用户的账号信息
 const bootstrapUser = async()=>{
     let user = null;
@@ -20,7 +21,7 @@ const bootstrapUser = async()=>{
     }
     return user
 } 
-
+//新建context数据
 const AuthContext = React.createContext<{
     user:User|null,
     register:(form:AuthForm)=>Promise<void>,
@@ -41,10 +42,10 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
         //获取用户信息并改变用户信息在APP.tsx中是根据这个信息加载页面的
         bootstrapUser().then(setUser)
     })
-
+    //共享数据
     return <AuthContext.Provider children={children} value={{user,login,register,logout}}/>
 }
- 
+ //调用context请求
 export const useAuth = () =>{
     const context = React.useContext(AuthContext)
     if(!context){
