@@ -4,7 +4,7 @@ import React from "react"
 import { ProjectListScreen } from "screens/project-list"
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg"
 import styled from '@emotion/styled'
-import {Dropdown,Menu} from 'antd'
+import {Dropdown,Menu,Button} from 'antd'
 import { Row } from "components/lid"
 export const AuthenticatedApp = ()=>{
     const {logout,user}=useAuth()
@@ -21,11 +21,11 @@ export const AuthenticatedApp = ()=>{
             <HeaderRight>
                 <Dropdown overlay={
                     <Menu.Item key={'logout'}>
-                        <a href="/#" onClick={logout}>登出</a>
+                        <Button type={"link"} onClick={logout}>登出</Button>
                     </Menu.Item>}>
-                    <a href="/#" onClick={e => e.preventDefault()}>
+                    <Button type={"link"} onClick={e => e.preventDefault()}>
                         Hi,{user?.name}
-                    </a>
+                    </Button>
                 </Dropdown>
 
             </HeaderRight>
