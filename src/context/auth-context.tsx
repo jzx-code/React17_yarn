@@ -3,6 +3,8 @@ import * as auth from 'auth-provider'
 import { User } from "screens/project-list/search-panel";
 import { http } from "utils/http";
 import { useMount } from "utils";
+import { useAsync } from "utils/use-async";
+import { FullPageErrorFallback, FullPageLoading } from "components/lid";
 
 interface AuthForm{
     username:string,
@@ -33,15 +35,22 @@ const AuthContext = React.createContext<{
 AuthContext.displayName='AuthContext'
 
 export const AuthProvider = ({children}:{children:ReactNode})=>{
-    const [user,setUser] = useState<User|null>(null)
+     const {data:user,error,isLoading,isIdle,isError,run,setData:setUser}=useAsync<User|null>()
+    // const [user,setUser] = useState<User|null>(null)
     const login = (form:AuthForm) =>auth.login(form).then(user=>setUser(user))
     const register = (form:AuthForm) =>auth.register(form).then(user=>setUser(user))
     const logout = () => auth.logout().then(()=>setUser(null))
     //页面加载调用
     useMount(()=>{
         //获取用户信息并改变用户信息在APP.tsx中是根据这个信息加载页面的
-        bootstrapUser().then(setUser)
+       run(bootstrapUser()) 
     })
+    if(isIdle||isLoading){
+        return <FullPageLoading/>
+    }
+    if(isError){
+        return <FullPageErrorFallback error={error}/>
+    }
     //共享数据
     return <AuthContext.Provider children={children} value={{user,login,register,logout}}/>
 }
