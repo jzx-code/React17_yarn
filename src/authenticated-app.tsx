@@ -4,37 +4,44 @@ import React from "react"
 import { ProjectListScreen } from "screens/project-list"
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg"
 import styled from '@emotion/styled'
-import {Dropdown,Menu,Button} from 'antd'
+import { Dropdown, Menu, Button } from 'antd'
 import { Row } from "components/lid"
-export const AuthenticatedApp = ()=>{
-    const {logout,user}=useAuth()
+export const AuthenticatedApp = () => {
+    const { logout, user } = useAuth()
     return (
         <Container>
-        {/* 登录页面 */}
-        <Header between={true}>
-            <HeaderLeft gap={true}>
-                <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'}/>
-                <h2>Logo</h2>
-                <h2>项目</h2>
-                <h2>用户</h2>
-            </HeaderLeft>
-            <HeaderRight>
-                <Dropdown overlay={
-                    <Menu.Item key={'logout'}>
-                        <Button type={"link"} onClick={logout}>登出</Button>
-                    </Menu.Item>}>
-                    <Button type={"link"} onClick={e => e.preventDefault()}>
-                        Hi,{user?.name}
-                    </Button>
-                </Dropdown>
+            {/* 登录页面 */}
+            <Header between={true}>
+                <HeaderLeft gap={true}>
+                    <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'} />
+                    <h2>Logo</h2>
+                    <h2>项目</h2>
+                    <h2>用户</h2>
+                </HeaderLeft>
+                <HeaderRight>
+                    <Dropdown
+                        overlay={
+                            <Menu>
+                                <Menu.Item key={"logout"}>
+                                    <Button onClick={logout} type={"link"}>
+                                        登出
+                                    </Button>
+                                </Menu.Item>
+                            </Menu>
+                        }
+                    >
+                        <Button type={"link"} onClick={(e) => e.preventDefault()}>
+                            Hi, {user?.name}
+                        </Button>
+                    </Dropdown>
 
-            </HeaderRight>
-        </Header>
-        <Main>
-            {/* 信息列表组件 */}
-            <ProjectListScreen/>
-        </Main>
-    </Container>)
+                </HeaderRight>
+            </Header>
+            <Main>
+                {/* 信息列表组件 */}
+                <ProjectListScreen />
+            </Main>
+        </Container>)
 }
 const Container = styled.div`
   display: grid;
@@ -51,4 +58,4 @@ const HeaderLeft = styled(Row)`
   align-items: center;
 `;
 const HeaderRight = styled.div``;
-const Main =styled.main``
+const Main = styled.main``

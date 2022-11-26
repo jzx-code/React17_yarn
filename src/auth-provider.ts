@@ -23,7 +23,7 @@ export const login = (data:{username:string,password:string})=>{
             return handleUserResponse(await response.json())
         }else{
             //由于fetch访问错误的时候无法抛出异常只能用else抛出一个异步的异常
-            return Promise.reject(data)
+            return Promise.reject(await response.json())
         }
       });
 }
@@ -39,7 +39,7 @@ export const register = (data:{username:string,password:string})=>{
         if (response.ok) {
             return handleUserResponse(await response.json())
         }else{
-            return Promise.reject(data)
+            return Promise.reject(await response.json())
         }
       });
 }
