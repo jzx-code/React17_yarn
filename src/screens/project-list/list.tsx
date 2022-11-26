@@ -1,14 +1,14 @@
 import React from "react";
 import { User } from "screens/project-list/search-panel";
 import {Table} from 'antd'
-import { render } from "@testing-library/react";
-import { spawn } from "child_process";
+import dayjs from "dayjs";
 interface Project {
   id: string;
   name: string;
   personId: string;
   pin: boolean;
   organization: string;
+  created:number;
 }
 
 interface ListProps {
@@ -20,14 +20,28 @@ export const List = ({ list, users }: ListProps) => {
   return <Table pagination={false} columns={[{
     title:"名称",
     dataIndex:"name",
+    //排序
     sorter:(a,b)=>a.name.localeCompare(b.name)
   },{
+    title:"部门",
+    dataIndex:"organization",
+  },
+  {
     title:"负责人",
     render(value,project){
+      //用于完成下拉选择和搜索筛选
       return <span>{users.find((user) => user.id === project.personId)?.name ||
         "未知"}</span>
     }
-  }]} dataSource={list}>
+  },
+  {
+    title:"创建时间",
+    render(value,project){
+      return <span>{project.created?dayjs(project.created).format('YYY-MM-SS'):"无"
+        }</span>
+    }
+  }
+  ]} dataSource={list}>
 
   </Table>
   // return (
