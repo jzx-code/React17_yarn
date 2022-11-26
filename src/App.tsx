@@ -1,4 +1,6 @@
 import { AuthenticatedApp } from "authenticated-app";
+import ErrorBpundary from "components/error-boundary";
+import { FullPageErrorFallback } from "components/lid";
 import { useAuth } from "context/auth-context";
 import React from "react";
 import { UnauthenticatedApp } from "unauthenticated-app";
@@ -9,8 +11,11 @@ function App() {
   const {user} = useAuth()
   return (
     <div className="App">
-      {/* 根据用户信息加载页面 */}
-      {user?<AuthenticatedApp/>:<UnauthenticatedApp/>}
+      <ErrorBpundary fallbackRender={FullPageErrorFallback}>
+        {/* 根据用户信息加载页面 */}
+        {user?<AuthenticatedApp/>:<UnauthenticatedApp/>}
+      </ErrorBpundary>
+
     </div>
   );
 }
