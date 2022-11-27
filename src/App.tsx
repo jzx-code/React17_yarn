@@ -11,6 +11,7 @@ function App() {
   const {user} = useAuth()
   return (
     <div className="App">
+      {/* 错误页面 */}
       <ErrorBpundary fallbackRender={FullPageErrorFallback}>
         {/* 根据用户信息加载页面 */}
         {user?<AuthenticatedApp/>:<UnauthenticatedApp/>}

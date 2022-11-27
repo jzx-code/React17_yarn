@@ -4,8 +4,11 @@ import {Form,Input} from 'antd'
 import { LongButton } from "unauthenticated-app";
 import { useAsync } from "utils/use-async";
 // 获取用户输入的信息
+//接收一个捕获错误信息的函数
 export const RegisterScreen = ({onError}:{onError:(error:Error)=>void}) => {
+  //context
   const { register, user } = useAuth();
+  //需要catch捕获异常故传入throwOnError:true
   const {run,isLoading}=useAsync( undefined,{throwOnError:true})
   const handleSubmit = async ({cpassword,...values}: { username: string; password: string ;cpassword:string}) => {
     if(cpassword!==values.password){
@@ -15,6 +18,7 @@ export const RegisterScreen = ({onError}:{onError:(error:Error)=>void}) => {
     try{
       await run(register(values));
     }catch(e){
+      //将捕获到的错误信息传到父组件
       onError(e as Error)
     }
     

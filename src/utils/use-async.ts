@@ -15,7 +15,10 @@ const defaultInitialState:State<null>={
 const defaultConfig = {
     throwOnError:false
 }
+//判断加载中的状态
 export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultConfig)=>{
+    //根据接收的信息进行是否需要异步的错误信息
+    //查看掉函数的时候是否需要catch
     const config = {...defaultConfig,...initialConfig}
     const [state,setState] = useState<State<D>>({
         ...defaultInitialState,

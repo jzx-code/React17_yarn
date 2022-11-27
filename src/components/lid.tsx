@@ -23,10 +23,13 @@ const FullPage = styled.div`
     justify-content: center;
     align-items: center;
 `
+//加载组件
 export const FullPageLoading=()=><FullPage>
     <Spin size={"large"}/>
 </FullPage>
+//错误组件
 export const FullPageErrorFallback = ({error}:{error:Error|null})=><FullPage>
+    {/* 小齿轮 */}
     <DevTools/>
     <Typography.Text type="danger">{error?.message}</Typography.Text>
 </FullPage>

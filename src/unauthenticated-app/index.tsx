@@ -10,6 +10,7 @@ import { useDocumentTitle } from "utils"
 export const UnauthenticatedApp = () => {
     const [isRegister, setIsRegister] = useState(false)
     const [error,setError]=useState<Error | null>(null)
+    //标题信息
     useDocumentTitle('请登录注册以继续')
     //登录注册页面的切换
     return (
@@ -20,10 +21,11 @@ export const UnauthenticatedApp = () => {
                 <Title>
                     {isRegister?"请注册":"请登录"}
                 </Title>
+                {/* 错误信息的显示 */}
                 {
                     error ? <Typography.Text type="danger">{error.message}</Typography.Text>:null
                 }
-                {
+                {    //从子组件接收错误信息
                     isRegister ? <RegisterScreen onError={setError}/> : <LoginScreen onError={setError}/>
                 }
                 <Divider />

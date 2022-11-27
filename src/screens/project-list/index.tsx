@@ -16,9 +16,10 @@ export const ProjectListScreen = () => {
   });
   //节流防抖查看用户的选项和输入框的信息
   const debouncedParam = useDebounce(param, 200);
-  //请求的封装
+  //project请求
   const {isLoading,error,data:list} = useProjects(debouncedParam)
   const {data:users}=useUser();
+  //标题的设置
   useDocumentTitle('项目列表',false)
   return (
     <Container>

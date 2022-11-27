@@ -8,11 +8,13 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 export const LoginScreen = ({onError}:{onError:(error:Error)=>void}) => {
   const {login,user}=useAuth()
+  //需要catch捕获异常故传入throwOnError:true
   const {run,isLoading}=useAsync( undefined,{throwOnError:true})
   const handleSubmit = async (values: {username:string,password:string}) => {
     try{
        await run(login(values))
     }catch(e){
+      //将捕获到的错误信息传到父组件
       onError(e as Error)
     }
   };

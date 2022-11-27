@@ -10,7 +10,7 @@ export const useProjects = (param?:Partial<Project>) =>{
     //请求的封装
     const client = useHttp()
     useEffect(() => {
-      //可以获取当前的一个登陆状态  
+      //可以获取当前的列表信息 
       run(client('projects',{data:cleanObject(param||{})}))
       // eslint-disable-next-line
     }, [param]);
