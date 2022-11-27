@@ -78,6 +78,7 @@ export const useArray = <T>(initialArray: T[]) => {
     },
   };
 };
+//设置页面标题
 export const useDocumentTitle = (title:string,keepOnUnmount:boolean=true)=>{
   //useRef保留初始化的值在整个生命周期一直有效
   const oldTitle = useRef(document.title).current
@@ -92,3 +93,4 @@ export const useDocumentTitle = (title:string,keepOnUnmount:boolean=true)=>{
     }
   },[keepOnUnmount,oldTitle])
 }
+export const resetRoute = ()=> window.location.href=window.location.origin
