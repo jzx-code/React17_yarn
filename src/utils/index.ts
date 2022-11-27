@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 export const isVoid = (value: unknown) => value === undefined||value===null||value==='';
@@ -78,3 +78,17 @@ export const useArray = <T>(initialArray: T[]) => {
     },
   };
 };
+export const useDocumentTitle = (title:string,keepOnUnmount:boolean=true)=>{
+  //useRef保留初始化的值在整个生命周期一直有效
+  const oldTitle = useRef(document.title).current
+  useEffect(()=>{
+    document.title=title
+  },[title])
+  useEffect(()=>{
+    return ()=>{
+      if(!keepOnUnmount){
+        document.title=oldTitle
+      }
+    }
+  },[keepOnUnmount,oldTitle])
+}

@@ -1,16 +1,13 @@
 import React from "react";
 import { SearchPanel } from "screens/project-list/search-panel";
 import { List } from "screens/project-list/list";
-import { useEffect, useState } from "react";
-import { cleanObject, useDebounce, useMount } from "../../utils";
-import { useHttp } from "utils/http";
+import { useState } from "react";
+import { useDebounce, useDocumentTitle } from "../../utils";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
-import { useAsync } from "utils/use-async";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
-// 使用 JS 的同学，大部分的错误都是在 runtime(运行时) 的时候发现的
-// 我们希望，在静态代码中，就能找到其中的一些错误 -> 强类型
+
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
@@ -22,7 +19,7 @@ export const ProjectListScreen = () => {
   //请求的封装
   const {isLoading,error,data:list} = useProjects(debouncedParam)
   const {data:users}=useUser();
-
+  useDocumentTitle('项目列表',false)
   return (
     <Container>
       <h1>项目列表</h1>
