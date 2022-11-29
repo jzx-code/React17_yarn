@@ -15,12 +15,12 @@ interface IdSelectProps extends Omit<SelectProps,'value'|'onChange'|'options'>{
 export const IdSelect = (props:IdSelectProps)=>{
     const {value,onChange,defaultOptionName,options,...restProps} = props
     return <Select 
-    value={toNumber(value)}
+    value={options?.length? toNumber(value):0}
     onChange={value=>onChange(toNumber(value)||undefined )}
     {...restProps}
     >
         {  
-            //这里的value会把所有没有意义的值装为0 
+            //默认选项
             defaultOptionName? <Select.Option value={0}>
                 {defaultOptionName}</Select.Option>:null
         }

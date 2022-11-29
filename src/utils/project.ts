@@ -3,7 +3,7 @@ import { Project } from "screens/project-list/list";
 import { cleanObject } from "utils";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";
-
+//Partial将参数转换为选参数
 export const useProjects = (param?:Partial<Project>) =>{
     //异步函数
     const {run,...result} = useAsync<Project[]>()

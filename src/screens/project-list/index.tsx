@@ -8,17 +8,18 @@ import { Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
+import { useProjectsSearchParams } from "./util";
 
 
 export const ProjectListScreen = () => {
-  const [param,setParam] = useUrlQueryParam(['name','personId'])
-  //节流防抖查看用户的选项和输入框的信息
+  //标题的设置
+  useDocumentTitle('项目列表',false)
+
+  const [param,setParam] = useProjectsSearchParams()
   const debouncedParam = useDebounce(param, 200);
   //project请求
   const {isLoading,error,data:list} = useProjects(debouncedParam)
   const {data:users}=useUser();
-  //标题的设置
-  useDocumentTitle('项目列表',false)
   return (
     <Container>
       <h1>项目列表</h1>
