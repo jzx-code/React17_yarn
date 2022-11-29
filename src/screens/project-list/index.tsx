@@ -7,13 +7,11 @@ import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
+import { useUrlQueryParam } from "utils/url";
 
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
+  const [param,setParam] = useUrlQueryParam(['name','personId'])
   //节流防抖查看用户的选项和输入框的信息
   const debouncedParam = useDebounce(param, 200);
   //project请求
@@ -30,6 +28,8 @@ export const ProjectListScreen = () => {
     </Container>
   );
 };
+
+// ProjectListScreen.whyDidYouRender=true
 
 const Container = styled.div`
   padding: 3.2rem;
