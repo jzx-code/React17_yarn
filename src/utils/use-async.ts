@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from "utils";
 //状态信息
 interface State<D>{
     error:Error|null;
@@ -24,11 +25,11 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
         ...defaultInitialState,
         ...initialState
     })
+    const mountedRef = useMountedRef()
     //使用useState保存函数的时候只加上一层会导致页面挂载和页面更新的时候直接调用
     //是因为useState保存函数消耗性能所以进行了懒加载，如果需要保存函数
     //就在这个函数为在套上一层
     const [retry,setRetry] = useState(()=>()=>{
-
     })
     //成功
     const setData = (data:D)=> setState({
@@ -55,7 +56,9 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
         })
         setState({...state,stat:"loading"})
         return promise.then(data =>{
-            setData(data)
+            if(mountedRef.current){
+                setData(data)
+            }
             return data
         }).catch(error=>{
             setError(error)
