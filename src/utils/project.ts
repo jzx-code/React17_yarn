@@ -9,10 +9,43 @@ export const useProjects = (param?:Partial<Project>) =>{
     const {run,...result} = useAsync<Project[]>()
     //请求的封装
     const client = useHttp()
+    const fetchProjects = ()=>client('projects',{data:cleanObject(param||{})})
     useEffect(() => {
       //可以获取当前的列表信息 
-      run(client('projects',{data:cleanObject(param||{})}))
+      run(fetchProjects(),{
+        retry:fetchProjects
+      })
       // eslint-disable-next-line
     }, [param]);
     return result
+}
+
+export const useEditProject = () =>{
+  const {run,...asyncResult} = useAsync()
+  const client = useHttp()
+  const mutate = (params:Partial<Project>)=>{
+    return run(client(`projects/${params.id}`,{
+      data:params,
+      method:"PATCH"
+    }))
+  }
+  return {
+    mutate,
+    ...asyncResult
+  }
+}
+
+export const useAddProject = () =>{
+  const {run,...asyncResult} = useAsync()
+  const client = useHttp()
+  const mutate = (params:Partial<Project>)=>{
+    return run(client(`projects/${params.id}`,{
+      data:params,
+      method:"POST"
+    }))
+  }
+  return {
+    mutate,
+    ...asyncResult
+  }
 }

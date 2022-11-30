@@ -24,6 +24,12 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
         ...defaultInitialState,
         ...initialState
     })
+    //使用useState保存函数的时候只加上一层会导致页面挂载和页面更新的时候直接调用
+    //是因为useState保存函数消耗性能所以进行了懒加载，如果需要保存函数
+    //就在这个函数为在套上一层
+    const [retry,setRetry] = useState(()=>()=>{
+
+    })
     //成功
     const setData = (data:D)=> setState({
         data,
@@ -37,10 +43,16 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
         data:null
     })
     //出发异步请求
-    const run = (promise:Promise<D>)=>{
+    const run = (promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
         if(!promise||!promise.then){
             throw new Error('请传入Promise 类型数据')
         }
+        setRetry(()=>()=>{
+            if(runConfig?.retry){
+                run(runConfig?.retry(),runConfig)
+            }
+            
+        })
         setState({...state,stat:"loading"})
         return promise.then(data =>{
             setData(data)
@@ -52,8 +64,6 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
                 //这里的catch会拦截异常如果需要在外面接收异常就需要重新的抛出
                 return Promise.reject(error)
             return error 
-           
-            
         })
     }
     //返回当前状态以及异步函数
@@ -65,6 +75,8 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
         run,
         setData,
         setError,
+        //调用后执行run,让数据进行刷新
+        retry,
         ...state
     }
 }
