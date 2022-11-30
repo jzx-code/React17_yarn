@@ -12,7 +12,6 @@ export const useUser = (param?:Partial<User>) =>{
     useEffect(() => {
       //可以获取当前的一个登陆状态  
       run(client('users',{data:cleanObject(param||{})}))
-      // eslint-disable-next-line
-    }, [param]);
+    }, [param,run,client]);
     return result
 }

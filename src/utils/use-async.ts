@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from "utils";
 //状态信息
 interface State<D>{
@@ -32,19 +32,24 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
     const [retry,setRetry] = useState(()=>()=>{
     })
     //成功
-    const setData = (data:D)=> setState({
-        data,
-        stat:"success",
-        error:null
-    })
+    const setData =useCallback( 
+     (data:D)=> 
+        setState({
+            data,
+            stat:"success",
+            error:null
+        }),
+     []
+     )
     //失败
-    const setError = (error:Error)=>setState({
+    const setError = useCallback( (error:Error)=>setState({
         error,
         stat:"error",
         data:null
-    })
+    }),[])
     //出发异步请求
-    const run = (promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
+    const run = useCallback(
+        (promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
         if(!promise||!promise.then){
             throw new Error('请传入Promise 类型数据')
         }
@@ -54,8 +59,11 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
             }
             
         })
-        setState({...state,stat:"loading"})
-        return promise.then(data =>{
+        //由于uesCallbak依赖于state选项state值改变就会重新调用会陷入无线循环
+        //故使用state
+        setState(prevState=> ({...prevState,stat:"loading"}))
+        return promise
+            .then(data =>{
             if(mountedRef.current){
                 setData(data)
             }
@@ -68,7 +76,7 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
                 return Promise.reject(error)
             return error 
         })
-    }
+    },[config.throwOnError,mountedRef,setData,setError])
     //返回当前状态以及异步函数
     return {
         isIdle:state.stat==='idle',

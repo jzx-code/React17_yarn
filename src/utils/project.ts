@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Project } from "screens/project-list/list";
 import { cleanObject } from "utils";
 import { useHttp } from "./http";
@@ -9,14 +9,15 @@ export const useProjects = (param?:Partial<Project>) =>{
     const {run,...result} = useAsync<Project[]>()
     //请求的封装
     const client = useHttp()
-    const fetchProjects = ()=>client('projects',{data:cleanObject(param||{})})
+    const fetchProjects = useCallback(
+      ()=>client('projects',{data:cleanObject(param||{})}),
+      [param,client])
     useEffect(() => {
       //可以获取当前的列表信息 
       run(fetchProjects(),{
         retry:fetchProjects
       })
-      // eslint-disable-next-line
-    }, [param]);
+    }, [param,run,fetchProjects]);
     return result
 }
 

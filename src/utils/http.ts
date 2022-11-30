@@ -1,6 +1,7 @@
 import qs from "qs";
 import * as auth from 'auth-provider'
 import { useAuth } from "context/auth-context";
+import { useCallback } from "react";
 
 //请求地址放在.env和.env.development文件中
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -29,7 +30,6 @@ export const http = async (endpoint:string,{data,token,headers,...customConfig}:
     }
   
     // axios 和 fetch 的表现不一样，axios可以直接在返回状态不为2xx的时候抛出异常
-    // eslint-disable-next-line
     return window
       .fetch(`${apiUrl}/${endpoint}`, config)
       .then(async (response) => {
@@ -52,7 +52,10 @@ export const http = async (endpoint:string,{data,token,headers,...customConfig}:
 export const useHttp = ()=>{
     const {user} = useAuth()
     //typeof是ts的typeof可以读取静态类型这里可以读取http函数的类型Parameters可以将函数的返回类型提取出来
-    return (...[endpoint,config]:Parameters<typeof http>)=> http(endpoint,{...config,token:user?.token})
+    return useCallback(
+      (...[endpoint,config]:Parameters<typeof http>)=>
+       http(endpoint,{...config,token:user?.token}),
+       [user?.token]) 
 }
 
 // interface 也没法实现Utility type
