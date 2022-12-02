@@ -109,6 +109,9 @@ export const subset = <
   );
   return Object.fromEntries(filteredEntries) as Pick<O, K>;
 };
+//解决在卸载的组件上赋值
+//返回组件的挂载状态，如果还没挂载或者已经卸载，返回false；反之，返回true
+//请求是异步的状态在请求未结束的时候切换页面会获取到结构后继续赋值
 export const useMountedRef = () =>{
   const mountedRef = useRef(false)
   useEffect(()=>{

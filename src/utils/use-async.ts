@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer,useState } from "react";
 import { useMountedRef } from "utils";
 //状态信息
 interface State<D>{
@@ -16,16 +16,28 @@ const defaultInitialState:State<null>={
 const defaultConfig = {
     throwOnError:false
 }
+const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+    const mountedRef = useMountedRef();
+    return useCallback(
+        //void 0 表示为用户点击后不会有任何效果
+      (...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0),
+      [dispatch, mountedRef]
+    );
+  };
+  
 //判断加载中的状态
 export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultConfig)=>{
     //根据接收的信息进行是否需要异步的错误信息
     //查看掉函数的时候是否需要catch
     const config = {...defaultConfig,...initialConfig}
-    const [state,setState] = useState<State<D>>({
-        ...defaultInitialState,
-        ...initialState
-    })
-    const mountedRef = useMountedRef()
+    const [state, dispatch] = useReducer(
+        (state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action }),
+        {
+          ...defaultInitialState,
+          ...initialState,
+        }
+    );
+    const safeDispatch = useSafeDispatch(dispatch);
     //使用useState保存函数的时候只加上一层会导致页面挂载和页面更新的时候直接调用
     //是因为useState保存函数消耗性能所以进行了懒加载，如果需要保存函数
     //就在这个函数为在套上一层
@@ -34,19 +46,19 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
     //成功
     const setData =useCallback( 
      (data:D)=> 
-        setState({
+        safeDispatch({
             data,
             stat:"success",
             error:null
         }),
-     []
+     [safeDispatch]
      )
     //失败
-    const setError = useCallback( (error:Error)=>setState({
+    const setError = useCallback( (error:Error)=>safeDispatch({
         error,
         stat:"error",
         data:null
-    }),[])
+    }),[safeDispatch])
     //出发异步请求
     const run = useCallback(
         (promise:Promise<D>,runConfig?:{retry:()=>Promise<D>})=>{
@@ -61,12 +73,10 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
         })
         //由于uesCallbak依赖于state选项state值改变就会重新调用会陷入无线循环
         //故使用state
-        setState(prevState=> ({...prevState,stat:"loading"}))
+        safeDispatch({ stat: "loading" });        
         return promise
             .then(data =>{
-            if(mountedRef.current){
-                setData(data)
-            }
+            setData(data);
             return data
         }).catch(error=>{
             setError(error)
@@ -76,7 +86,7 @@ export const useAsync=<D>(initialState?:State<D>,initialConfig?:typeof defaultCo
                 return Promise.reject(error)
             return error 
         })
-    },[config.throwOnError,mountedRef,setData,setError])
+    },[config.throwOnError,safeDispatch,setData,setError])
     //返回当前状态以及异步函数
     return {
         isIdle:state.stat==='idle',
