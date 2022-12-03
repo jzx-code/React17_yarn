@@ -15,20 +15,22 @@ import { ProjectPopover } from "components/project-popover"
 export const AuthenticatedApp = () => {
     return (
         <Container>
+            <BrowserRouter>
             {/* 登录页面 */}
             <PageHeader />
             <Main>
                 {/* 信息列表组件 */}
                 {/* <ProjectListScreen /> */}
-                <BrowserRouter>
+                
                     <Routes>
                         <Route path={"projects"} element={<ProjectListScreen/>} />
                         <Route path={"projects/:projectId/*"} element={<ProjectScreen />} />
                         <Route index element={<ProjectListScreen/>} />
                     </Routes>
-                </BrowserRouter>
-            </Main>
-            <ProjectModa />
+                
+                </Main>
+                <ProjectModa />
+            </BrowserRouter>     
         </Container>)
 }
 const PageHeader = () => {

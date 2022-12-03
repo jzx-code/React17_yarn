@@ -37,8 +37,13 @@ export const FullPageErrorFallback = ({error}:{error:Error|null})=><FullPage>
 
 export const ButtonNoPadding = styled(Button)`
     padding: 0;
-    border: 0px;
+    background-color: white;
+    /* border: 0px; */
     :first-of-type{
-        border-left: 0px;
+        border: 0px;
+    }
+    :not(:first-child)::before{
+     border: 0px;
+     background: white;
     }
 `

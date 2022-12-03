@@ -14,3 +14,18 @@ export const useProjectsSearchParams = () =>{
         //返回值是数组是联合类型，即为这两个的任意类型既可，加上as const会推断本身的类型值进行返回
     ] as const
 }
+
+export const useProjectModal = () => {
+    const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
+      "projectCreate",
+    ]);
+  
+    const open = () => setProjectCreate({ projectCreate: true });
+    const close = () => setProjectCreate({ projectCreate: undefined });
+  
+    return {
+      projectModalOpen: projectCreate === "true",
+      open,
+      close,
+    };
+  };

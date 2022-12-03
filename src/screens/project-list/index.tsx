@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { Button, Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
-import { useProjectsSearchParams } from "./util";
+import { useProjectModal, useProjectsSearchParams } from "./util";
 import { ButtonNoPadding, Row } from "components/lid";
 import { useDispatch } from "react-redux";
 import { projectListActions } from "./project-list.slice";
@@ -21,15 +21,16 @@ export const ProjectListScreen = () => {
   //project请求列表信息
   const {isLoading,error,data:list,retry} = useProjects(debouncedParam)
   const {data:users}=useUser();
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
+  const { open } = useProjectModal();
   return (
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
         <ButtonNoPadding 
-            onClick={()=>dispatch(projectListActions.openProjectModal())} 
-            type="link">
-                创建项目
+            //onClick={()=>dispatch(projectListActions.openProjectModal())} 
+            onClick={open}
+            type={"link"}>创建项目
         </ButtonNoPadding>
       </Row>
       <SearchPanel users={users||[]} param={param} setParam={setParam} />
