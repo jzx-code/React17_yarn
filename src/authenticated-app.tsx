@@ -13,43 +13,32 @@ import { resetRoute } from "utils"
 import { ProjectModa } from "screens/project-list/project-modal"
 import { ProjectPopover } from "components/project-popover"
 export const AuthenticatedApp = () => {
-    const [projectModelOpen,setProjectModalOpen] = useState(false)
-
     return (
         <Container>
             {/* 登录页面 */}
-            <PageHeader 
-                projectButton={
-                    <ButtonNoPadding onClick={()=>setProjectModalOpen(true)}
-                     type="link">创建项目</ButtonNoPadding>
-                }/>
+            <PageHeader />
             <Main>
                 {/* 信息列表组件 */}
                 {/* <ProjectListScreen /> */}
                 <BrowserRouter>
                     <Routes>
-                        <Route path={"projects"} element={<ProjectListScreen
-                         projectButton={
-                        <ButtonNoPadding onClick={()=>setProjectModalOpen(true)} 
-                        type="link">创建项目</ButtonNoPadding>}/>} />
+                        <Route path={"projects"} element={<ProjectListScreen/>} />
                         <Route path={"projects/:projectId/*"} element={<ProjectScreen />} />
-                        <Route index element={<ProjectListScreen projectButton={
-                            <ButtonNoPadding onClick={()=>setProjectModalOpen(true)} 
-                            type="link">创建项目</ButtonNoPadding>} />} />
+                        <Route index element={<ProjectListScreen/>} />
                     </Routes>
                 </BrowserRouter>
             </Main>
-            <ProjectModa projectModalOpne={projectModelOpen} onClose={()=>setProjectModalOpen(false)}/>
+            <ProjectModa />
         </Container>)
 }
-const PageHeader = (props:{projectButton:JSX.Element}) => {
+const PageHeader = () => {
     return (
         <Header between={true}>
             <HeaderLeft gap={true}>
                 <ButtonNoPadding  type="link" onClick={resetRoute}>
                     <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'} />
                 </ButtonNoPadding>
-                <ProjectPopover {...props}/>
+                <ProjectPopover/>
                 <span>用户</span>
             </HeaderLeft>
             <HeaderRight>

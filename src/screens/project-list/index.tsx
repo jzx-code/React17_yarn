@@ -7,10 +7,12 @@ import { Button, Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useProjectsSearchParams } from "./util";
-import { Row } from "components/lid";
+import { ButtonNoPadding, Row } from "components/lid";
+import { useDispatch } from "react-redux";
+import { projectListActions } from "./project-list.slice";
 
 
-export const ProjectListScreen = (props:{projectButton:JSX.Element}) => {
+export const ProjectListScreen = () => {
   //标题的设置
   useDocumentTitle('项目列表',false)
 
@@ -19,18 +21,22 @@ export const ProjectListScreen = (props:{projectButton:JSX.Element}) => {
   //project请求列表信息
   const {isLoading,error,data:list,retry} = useProjects(debouncedParam)
   const {data:users}=useUser();
+  const dispatch = useDispatch()
   return (
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <ButtonNoPadding 
+            onClick={()=>dispatch(projectListActions.openProjectModal())} 
+            type="link">
+                创建项目
+        </ButtonNoPadding>
       </Row>
       <SearchPanel users={users||[]} param={param} setParam={setParam} />
       {error?<Typography.Text type="danger">{error.message}</Typography.Text>:null}
       <List 
       refresh={retry} loading={isLoading}
-      users={users||[]} dataSource={list||[]}
-      projectButton={props.projectButton} />
+      users={users||[]} dataSource={list||[]}/>
     </Container>
   );
 };

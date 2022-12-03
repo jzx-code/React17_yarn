@@ -32,8 +32,8 @@ export const RegisterScreen = ({onError}:{onError:(error:Error)=>void}) => {
       <Form.Item name={'password'} rules={[{required:true,message:"请输入密码"}]}>
         <Input placeholder={"密码"}  type="password" id={"password"} />
       </Form.Item>
-      <Form.Item name={'password'} rules={[{required:true,message:"请再次输入密码"}]}>
-        <Input placeholder={"确认密码"}  type="password" id={"password"} />
+      <Form.Item name={'cpassword'} rules={[{required:true,message:"请再次输入密码"}]}>
+        <Input placeholder={"确认密码"}  type="password" id={"cpassword"} />
       </Form.Item>
       <Form.Item>
         <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>注册</LongButton>
