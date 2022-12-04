@@ -4,16 +4,14 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lid";
 import { UserSelect } from "components/user-select";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useAddProject, useEditProject } from "utils/project";
-import { projectListActions, selectProjectModalOpen } from "./project-list.slice";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectsQueryKey } from "./util";
 
 export const ProjectModa = () => {
     // const dispatch = useDispatch()
     const { projectModalOpen, close, editingProject, isLoading } = useProjectModal();
     const useMutateProject = editingProject ? useEditProject : useAddProject
-    const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject();
+    const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject(useProjectsQueryKey());
     const [form] = useForm()
     const onFinish = (values: any) => {
         mutateAsync({ ...editingProject, ...values }).then(() => {
@@ -27,7 +25,7 @@ export const ProjectModa = () => {
     }, [editingProject, form]);
     // const projectModalOpen = useSelector(selectProjectModalOpen)
     return (
-        //     强制渲染forceRender={true}
+        //强制渲染forceRender={true}
         <Drawer
             forceRender={true}
             onClose={close}
@@ -67,7 +65,7 @@ export const ProjectModa = () => {
                                 <UserSelect defaultOptionName={"负责人"} />
                             </Form.Item>
 
-                            <Form.Item style={{ textAlign: "right" }}>
+                            <Form.Item style={{ textAlign: "right" }} name={"button"}>
                                 <Button
                                     loading={mutateLoading}
                                     type={"primary"}

@@ -6,7 +6,7 @@ import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg"
 import styled from '@emotion/styled'
 import { Dropdown, Menu, Button } from 'antd'
 import { ButtonNoPadding, Row } from "components/lid"
-import { Route,Routes } from "react-router"
+import { Route, Routes } from "react-router"
 import { BrowserRouter } from "react-router-dom"
 import { ProjectScreen } from "screens/peoject"
 import { resetRoute } from "utils"
@@ -16,56 +16,56 @@ export const AuthenticatedApp = () => {
     return (
         <Container>
             <BrowserRouter>
-            {/* 登录页面 */}
-            <PageHeader />
-            <Main>
-                {/* 信息列表组件 */}
-                {/* <ProjectListScreen /> */}
-                
+                {/* 登录页面 */}
+                <PageHeader />
+                <Main>
+                    {/* 信息列表组件 */}
+                    {/* <ProjectListScreen /> */}
+
                     <Routes>
-                        <Route path={"projects"} element={<ProjectListScreen/>} />
+                        <Route path={"projects"} element={<ProjectListScreen />} />
                         <Route path={"projects/:projectId/*"} element={<ProjectScreen />} />
-                        <Route index element={<ProjectListScreen/>} />
+                        <Route index element={<ProjectListScreen />} />
                     </Routes>
-                
+
                 </Main>
                 <ProjectModa />
-            </BrowserRouter>     
+            </BrowserRouter>
         </Container>)
 }
 const PageHeader = () => {
     return (
         <Header between={true}>
             <HeaderLeft gap={true}>
-                <ButtonNoPadding  type="link" onClick={resetRoute}>
+                <ButtonNoPadding type="link" onClick={resetRoute}>
                     <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'} />
                 </ButtonNoPadding>
-                <ProjectPopover/>
+                <ProjectPopover />
                 <span>用户</span>
             </HeaderLeft>
             <HeaderRight>
-            <User/>
+                <User />
             </HeaderRight>
         </Header>
     )
 }
-const User = ()=>{
+const User = () => {
     const { logout, user } = useAuth()
-    return  <Dropdown
-    overlay={
-        <Menu>
-            <Menu.Item key={"logout"}>
-                <Button onClick={logout} type={"link"}>
-                    登出
-                </Button>
-            </Menu.Item>
-        </Menu>
-    }
->
-    <Button type={"link"} onClick={(e) => e.preventDefault()}>
-        Hi, {user?.name}
-    </Button>
-</Dropdown>
+    return <Dropdown key={'user'}
+        overlay={
+            <Menu>
+                <Menu.Item key={"logout"}>
+                    <Button onClick={logout} type={"link"}>
+                        登出
+                    </Button>
+                </Menu.Item>
+            </Menu>
+        }
+    >
+        <Button type={"link"} onClick={(e) => e.preventDefault()}>
+            Hi, {user?.name}
+        </Button>
+    </Dropdown>
 }
 
 const Container = styled.div`

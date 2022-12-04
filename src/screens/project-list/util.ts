@@ -1,14 +1,11 @@
 import { useMemo } from "react"
 import { useQuery } from "react-query"
-import { useSearchParams } from "react-router-dom"
 import { useHttp } from "utils/http"
 import { useUrlQueryParam } from "utils/url"
 import { Project } from "./list"
-
+//列表搜索参数
 export const useProjectsSearchParams = () =>{
     const [param,setParam] = useUrlQueryParam(['name','personId'])
-    //节流防抖查看用户的选项和输入框的信息
-    
     return [
         //返回值会出现重复调用的情况所以需要加上useMemo
         //id的属性为number但是传入的属性是string进行转换
@@ -18,15 +15,17 @@ export const useProjectsSearchParams = () =>{
         //返回值是数组是联合类型，即为这两个的任意类型既可，加上as const会推断本身的类型值进行返回
     ] as const
 }
-
+export const useProjectsQueryKey  = ()=>{
+    const [param] =useProjectsSearchParams();
+    return ["projects",param]
+}
 export const useProjectModal = () => {
     const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
       "projectCreate",
     ]);
     const [{editingProjectId},setEditinfProjectId]=useUrlQueryParam([
-        'editingProjectId'
+      'editingProjectId'
     ])
-    // const [_, setUrlParams] = useSearchParams();
     const {data:editingProject,isLoading}=useProject(Number(editingProjectId))
     const open = () => setProjectCreate({ projectCreate: true });
     const close = () => { projectCreate?
@@ -46,6 +45,7 @@ export const useProjectModal = () => {
 export const useProject = (id?:number)=>{
     const client = useHttp()
     return useQuery<Project>(
+        //名字为project检测到id的变化再次请求
         ['project',{id}],
         ()=> client(`projects/${id}`),
         {
