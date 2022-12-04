@@ -7,7 +7,7 @@ import { Button, Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useProjectModal, useProjectsSearchParams } from "./util";
-import { ButtonNoPadding, Row } from "components/lid";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lid";
 import { useDispatch } from "react-redux";
 import { projectListActions } from "./project-list.slice";
 
@@ -19,7 +19,7 @@ export const ProjectListScreen = () => {
   const [param,setParam] = useProjectsSearchParams()
   const debouncedParam = useDebounce(param, 200);
   //project请求列表信息
-  const {isLoading,error,data:list,retry} = useProjects(debouncedParam)
+  const {isLoading,error,data:list} = useProjects(debouncedParam)
   const {data:users}=useUser();
   // const dispatch = useDispatch()
   const { open } = useProjectModal();
@@ -34,9 +34,9 @@ export const ProjectListScreen = () => {
         </ButtonNoPadding>
       </Row>
       <SearchPanel users={users||[]} param={param} setParam={setParam} />
-      {error?<Typography.Text type="danger">{error.message}</Typography.Text>:null}
+      <ErrorBox error={error}/>
       <List 
-      refresh={retry} loading={isLoading}
+       loading={isLoading}
       users={users||[]} dataSource={list||[]}/>
     </Container>
   );

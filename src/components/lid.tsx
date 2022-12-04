@@ -1,6 +1,5 @@
 import styled from "@emotion/styled"
-import { Spin, Typography } from "antd"
-import { Button } from "antd/lib/radio"
+import { Spin, Typography,Button } from "antd"
 import { DevTools } from "jira-dev-tool"
 import React from "react"
 export const Row =styled.div<{
@@ -32,18 +31,30 @@ export const FullPageLoading=()=><FullPage>
 export const FullPageErrorFallback = ({error}:{error:Error|null})=><FullPage>
     {/* 小齿轮 */}
     <DevTools/>
-    <Typography.Text type="danger">{error?.message}</Typography.Text>
+    <ErrorBox error={error}/>
 </FullPage>
 
 export const ButtonNoPadding = styled(Button)`
     padding: 0;
-    background-color: white;
+    background: white;
     /* border: 0px; */
     :first-of-type{
+        content: none;
         border: 0px;
     }
-    :not(:first-child)::before{
-     border: 0px;
+    :not(:first-of-type)::before{
+     width: 1px;
+     border: 1px solid white;
      background: white;
     }
+
 `
+//类型守卫
+const isError = (value:any) :value is Error => value?.massage
+
+export const ErrorBox = ({error}:{error:unknown})=>{
+    if(isError(error)){
+        return <Typography.Text type="danger">{error?.message}</Typography.Text>
+    }
+    return null
+}
