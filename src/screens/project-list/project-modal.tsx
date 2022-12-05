@@ -20,6 +20,11 @@ export const ProjectModa = () => {
         })
     }
     const title = editingProject ? "编辑项目" : "创建项目"
+
+    const closeModal = () =>{
+        form.resetFields()
+        close()
+    }
     useEffect(() => {
         form.setFieldsValue(editingProject);
     }, [editingProject, form]);
@@ -28,7 +33,7 @@ export const ProjectModa = () => {
         //强制渲染forceRender={true}
         <Drawer
             forceRender={true}
-            onClose={close}
+            onClose={closeModal}
             visible={projectModalOpen}
             width={"100%"}
         >

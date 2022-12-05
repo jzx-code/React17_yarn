@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useState } from "react";
 import * as auth from 'auth-provider'
-import { User } from "screens/project-list/search-panel";
+import { User } from "types/user";
 import { http } from "utils/http";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { bootstrap, selectUser } from "store/auth.slice";
 import * as authStore from "store/auth.slice";
 import { AppDispatch } from "store";
+import { useQueryClient } from "react-query";
 export interface AuthForm{
     username:string,
     password:string
@@ -41,9 +42,14 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     //  const {data:user,error,isLoading,isIdle,isError,run}=useAsync<User|null>()
     //  const dispatch: (...args: unknown[]) => Promise<User> = useDispatch<AppDispatch>();
     const {data:user,error,isLoading,isIdle,isError,run,setData:setUser}=useAsync<User|null>()
+    const queryClient = useQueryClient()
+   
     const login = (form:AuthForm) =>auth.login(form).then(user=>setUser(user))
     const register = (form:AuthForm) =>auth.register(form).then(user=>setUser(user))
-    const logout = () => auth.logout().then(()=>setUser(null))
+    const logout = () => auth.logout().then(()=>{
+        setUser(null)
+        queryClient.clear()    
+    })
     //页面加载调用
     useMount(()=>{
         //获取用户信息并改变用户信息在APP.tsx中是根据这个信息加载页面的

@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { useQuery } from "react-query"
 import { useHttp } from "utils/http"
 import { useUrlQueryParam } from "utils/url"
-import { Project } from "./list"
+import { Project } from "../../types/project"
 //列表搜索参数
 export const useProjectsSearchParams = () =>{
     const [param,setParam] = useUrlQueryParam(['name','personId'])
@@ -33,7 +33,7 @@ export const useProjectModal = () => {
         setEditinfProjectId({editingProjectId:undefined})};
     const startEdit = (id:number) => setEditinfProjectId({editingProjectId:id})
     return {
-      projectModalOpen: projectCreate === "true"||Boolean(editingProject),
+      projectModalOpen: projectCreate === "true"||Boolean(editingProjectId),
       open,
       close,
       startEdit,

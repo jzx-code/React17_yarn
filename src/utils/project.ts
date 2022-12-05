@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
-import { Project } from "screens/project-list/list";
+import { Project } from "types/project";
 import { useHttp } from "./http";
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-options";
 //Partial将参数转换为选参数

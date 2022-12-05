@@ -21,13 +21,11 @@ export const AuthenticatedApp = () => {
                 <Main>
                     {/* 信息列表组件 */}
                     {/* <ProjectListScreen /> */}
-
                     <Routes>
                         <Route path={"projects"} element={<ProjectListScreen />} />
                         <Route path={"projects/:projectId/*"} element={<ProjectScreen />} />
                         <Route index element={<ProjectListScreen />} />
                     </Routes>
-
                 </Main>
                 <ProjectModa />
             </BrowserRouter>

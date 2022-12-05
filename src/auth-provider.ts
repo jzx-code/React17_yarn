@@ -1,4 +1,4 @@
-import {User} from "screens/project-list/search-panel"
+import { User } from "types/user";
 //请求地址放在.env和.env.development文件中
 const apiUrl = process.env.REACT_APP_API_URL;
 //token令牌

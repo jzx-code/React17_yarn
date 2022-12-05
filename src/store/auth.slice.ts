@@ -1,4 +1,4 @@
-import { User } from "screens/project-list/search-panel";
+import { User } from "types/user";
 import {createSlice} from "@reduxjs/toolkit"
 import * as auth from "auth-provider"
 import { AuthForm, bootstrapUser } from "context/auth-context";
