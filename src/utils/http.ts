@@ -57,19 +57,3 @@ export const useHttp = ()=>{
        http(endpoint,{...config,token:user?.token}),
        [user?.token]) 
 }
-
-// interface 也没法实现Utility type
-// type Person = {
-//     name: string;
-//     age: number;
-//   };
-// Partial 对泛型里的类型进行编辑，这样我们给变量赋值的时候，可以不用传全部的类型，缺失某一个，或全部缺失都不会报错
-//   const xiaoMing: Partial<Person> = {};
-// Omit 传入两个类型，第一个是基本类型，第二个要删除的类型，也就是把第一个类型中某些属性删掉。删掉的情况下，再传这个属性就会报错，如果什么都不传也会报错，因只删除了一个属性
-//   const shenMiRen: Omit<Person, "name" | "age"> = {};
-//  获取对象所有属性的类型
-// type PersonKeys = keyof Person;
-// 取出类型返回一个新的类型
-// type PersonOnlyName = Pick<Person, "name" | "age">;
-// 删除这个属性返回剩下的类型
-// type Age = Exclude<PersonKeys, "name">;
