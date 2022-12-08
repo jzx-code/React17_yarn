@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button, Drawer, Form, Input, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { ErrorBox } from "components/lid";
+import { ErrorBox } from "components/lib";
 import { UserSelect } from "components/user-select";
 import React, { useEffect } from "react";
 import { useAddProject, useEditProject } from "utils/project";

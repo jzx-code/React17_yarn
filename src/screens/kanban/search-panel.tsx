@@ -1,5 +1,5 @@
 import { Button, Input } from "antd";
-import { Row } from "components/lid";
+import { Row } from "components/lib";
 import { TaskTypeSelect } from "components/task-type-select";
 import { UserSelect } from "components/user-select";
 import React from "react";
@@ -35,7 +35,7 @@ export const SearchPanel = () => {
                 value={searchParams.typeId}
                 onChange={(value) => setSearchParams({ typeId: value })}
             />
-            <Button onClick={reset}>清楚筛选器</Button>
+            <Button onClick={reset}>清除筛选器</Button>
         </Row>
     )
 }

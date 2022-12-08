@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { projectListActions } from "screens/project-list/project-list.slice";
 import { useProjectModal } from "screens/project-list/util";
 import { useProjects } from "utils/project";
-import { ButtonNoPadding } from "./lid";
+import { ButtonNoPadding } from "./lib";
 
 
 export const ProjectPopover = ()=>{

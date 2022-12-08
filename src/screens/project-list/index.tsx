@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { useProjects } from "utils/project";
 import { useUser } from "utils/user";
 import { useProjectModal, useProjectsSearchParams } from "./util";
-import { ButtonNoPadding, ErrorBox, Row } from "components/lid";
+import { ButtonNoPadding, ErrorBox, Row, ScreenContainer } from "components/lib";
 
 
 
@@ -22,7 +22,7 @@ export const ProjectListScreen = () => {
   // const dispatch = useDispatch()
   const { open } = useProjectModal();
   return (
-    <Container>
+    <ScreenContainer>
       <Row between={true}>
         <h1>项目列表</h1>
         <ButtonNoPadding 
@@ -36,7 +36,7 @@ export const ProjectListScreen = () => {
       <List 
        loading={isLoading}
       users={users||[]} dataSource={list||[]}/>
-    </Container>
+    </ScreenContainer>
   );
 };
 

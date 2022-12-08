@@ -4,7 +4,7 @@ import { User } from "types/user";
 import { http } from "utils/http";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
-import { FullPageErrorFallback, FullPageLoading } from "components/lid";
+import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 import { useDispatch, useSelector } from "react-redux";
 import { bootstrap, selectUser } from "store/auth.slice";
 import * as authStore from "store/auth.slice";

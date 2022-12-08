@@ -5,7 +5,7 @@ import { ProjectListScreen } from "screens/project-list"
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg"
 import styled from '@emotion/styled'
 import { Dropdown, Menu, Button } from 'antd'
-import { ButtonNoPadding, Row } from "components/lid"
+import { ButtonNoPadding, Row } from "components/lib"
 import { Route, Routes } from "react-router"
 import { BrowserRouter } from "react-router-dom"
 import { ProjectScreen } from "screens/peoject"
@@ -68,7 +68,7 @@ const User = () => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 6rem 1fr 6rem;
+  grid-template-rows: 6rem 1fr;
   height: 100vh;
 `;
 const Header = styled(Row)`
@@ -81,4 +81,7 @@ const HeaderLeft = styled(Row)`
   align-items: center;
 `;
 const HeaderRight = styled.div``;
-const Main = styled.main``
+const Main = styled.main`
+  display: flex;
+  overflow: hidden;
+`;

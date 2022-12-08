@@ -1,6 +1,6 @@
 import { AuthenticatedApp } from "authenticated-app";
 import ErrorBpundary from "components/error-boundary";
-import { FullPageErrorFallback } from "components/lid";
+import { FullPageErrorFallback } from "components/lib";
 import { useAuth } from "context/auth-context";
 import React from "react";
 import { UnauthenticatedApp } from "unauthenticated-app";

@@ -4,27 +4,28 @@ import { SearchPanel } from "./search-panel";
 import { useDocumentTitle } from "utils";
 import { useKanbans } from "utils/kanban";
 import { KanbanColumn } from "./kanban-column";
-import {  useKanbanSearchParamas, useProjectInUrl } from "./util";
+import { useKanbanSearchParamas, useProjectInUrl } from "./util";
+import { ScreenContainer } from "components/lib";
 
-export const KanbanScreen = () =>{
+export const KanbanScreen = () => {
     useDocumentTitle("看板列表")
-    const {data:currentProject}=useProjectInUrl()
-    const {data:kanbans} = useKanbans(useKanbanSearchParamas())
+    const { data: currentProject } = useProjectInUrl()
+    const { data: kanbans } = useKanbans(useKanbanSearchParamas())
     console.log(kanbans)
     return (
-        <div>
+        <ScreenContainer>
             <h1>{currentProject?.name}</h1>
-            <SearchPanel  />
+            <SearchPanel />
             <ColumnsContainer>
-                {kanbans?.map((kanban)=>(
+                {kanbans?.map((kanban) => (
                     <KanbanColumn kanban={kanban} key={kanban.id} />
                 ))}
             </ColumnsContainer>
-        </div>
+        </ScreenContainer>
     )
 }
 const ColumnsContainer = styled.div`
   display: flex;
-  overflow: hidden;
-  margin-right: 2rem;
+  /* overflow-y: scroll; */
+  flex: 1;
 `;
