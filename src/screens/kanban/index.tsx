@@ -4,28 +4,35 @@ import { SearchPanel } from "./search-panel";
 import { useDocumentTitle } from "utils";
 import { useKanbans } from "utils/kanban";
 import { KanbanColumn } from "./kanban-column";
-import { useKanbanSearchParamas, useProjectInUrl } from "./util";
+import { useKanbanSearchParamas, useProjectInUrl, useTasksSearchParamas } from "./util";
 import { ScreenContainer } from "components/lib";
+import { useTasks } from "utils/task";
+import { Spin } from "antd";
+import { CreateKanban } from "./create-kanban";
+import { TaskModal } from "./task-modal";
 
 export const KanbanScreen = () => {
     useDocumentTitle("看板列表")
     const { data: currentProject } = useProjectInUrl()
-    const { data: kanbans } = useKanbans(useKanbanSearchParamas())
-    console.log(kanbans)
+    const { data: kanbans ,isLoading:kanbanIsLoading} = useKanbans(useKanbanSearchParamas())
+    const {isLoading:taskIsLoading}=useTasks(useTasksSearchParamas())
+    const isLoading = taskIsLoading||kanbanIsLoading
     return (
         <ScreenContainer>
             <h1>{currentProject?.name}</h1>
             <SearchPanel />
-            <ColumnsContainer>
+            {isLoading?<Spin size={"large"}/>:<ColumnsContainer>
                 {kanbans?.map((kanban) => (
                     <KanbanColumn kanban={kanban} key={kanban.id} />
                 ))}
-            </ColumnsContainer>
+                <CreateKanban/>
+            </ColumnsContainer>}
+            <TaskModal/>
         </ScreenContainer>
     )
 }
-const ColumnsContainer = styled.div`
+export const ColumnsContainer = styled.div`
   display: flex;
-  /* overflow-y: scroll; */
+  overflow-x: scroll;
   flex: 1;
 `;

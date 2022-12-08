@@ -26,8 +26,6 @@ export const useEditProject = (queryKey:QueryKey) =>{
 //添加用户
 export const useAddProject = (queryKey: QueryKey) =>{
   const client = useHttp()
-  const queryClient = useQueryClient()
-
   return useMutation(
     (params:Partial<Project>)=>client(`projects`,{
       method:"POST",
