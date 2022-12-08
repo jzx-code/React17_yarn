@@ -53,10 +53,7 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
             </Row>
             <TasksContainer>
                 {tasks?.map((task) => (
-                    <Card onClick={() => startEdit(task.id)} style={{ marginBottom: "0.5rem", cursor: "pointer" }} key={task.id}>
-                        <div>{task.name}</div>
-                        <TaskTypeIcon id={task.typeId} />
-                    </Card>
+                    <TaskCard key={task.id} task={task} />
                 ))}
                 <CreateTask kanbanId={kanban.id} />
             </TasksContainer>
