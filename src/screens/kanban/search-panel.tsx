@@ -4,10 +4,10 @@ import { TaskTypeSelect } from "components/task-type-select";
 import { UserSelect } from "components/user-select";
 import React from "react";
 import { useSetUrlSearchParam } from "utils/url";
-import { useTasksSearchParamas } from "./util"
+import { useTasksSearchParams } from "./util"
 
 export const SearchPanel = () => {
-    const searchParams = useTasksSearchParamas();
+    const searchParams = useTasksSearchParams();
     const setSearchParams = useSetUrlSearchParam();
     const reset = () => {
         setSearchParams({

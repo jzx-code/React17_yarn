@@ -12,12 +12,12 @@ export const useProjectIdInUrl = ()=>{
 
 export const useProjectInUrl  = () => useProject(useProjectIdInUrl())
 
-export const useKanbanSearchParamas = () => ({projectId:useProjectIdInUrl()})
+export const useKanbanSearchParams = () => ({projectId:useProjectIdInUrl()})
 
 export const useKanbansQueryKey = () =>
-    ['kanbans' ,useKanbanSearchParamas()];
+    ['kanbans' ,useKanbanSearchParams()];
 
-export const useTasksSearchParamas = () => {
+export const useTasksSearchParams = () => {
     const [param,setParam] = useUrlQueryParam([
         "name",
         "typeId",
@@ -36,7 +36,7 @@ export const useTasksSearchParamas = () => {
 
 
 export const useTasksQueryKey = () =>
-    ['tasks' ,useTasksSearchParamas()];
+    ['tasks' ,useTasksSearchParams()];
 
 export const useTaskModal = () =>{
     const [{editingTaskId},setEditingTaskId] = useUrlQueryParam(['editingTaskId'])
