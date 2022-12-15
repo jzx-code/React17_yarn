@@ -42,6 +42,8 @@ export const TaskModal=()=>{
     },[form,editingTask])
     return (
         <Modal
+          transitionName=""
+          maskTransitionName=""
           forceRender={true}
           onCancel={onCancel}
           onOk={onOk}

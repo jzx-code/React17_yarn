@@ -11,18 +11,17 @@ export const useProjects = (param?:Partial<Project>) =>{
     return useQuery<Project[]>(['projects',param],()=>client('projects',{data:param}))
 }
 //编辑用户
-export const useEditProject = (queryKey:QueryKey) =>{
-  const client = useHttp()
-  const queryClient = useQueryClient()
-  //用于除了GET其他请求
+export const useEditProject = (queryKey: QueryKey) => {
+  const client = useHttp();
   return useMutation(
-    (params:Partial<Project>)=>client(`projects/${params.id}`,{
-      method:"PATCH",
-      data:params
-    }),
-    useEditConfig (queryKey)
-  )
-}
+    (params: Partial<Project>) =>
+      client(`projects/${params.id}`, {
+        method: "PATCH",
+        data: params,
+      }),
+    useEditConfig(queryKey)
+  );
+};
 //添加用户
 export const useAddProject = (queryKey: QueryKey) =>{
   const client = useHttp()
